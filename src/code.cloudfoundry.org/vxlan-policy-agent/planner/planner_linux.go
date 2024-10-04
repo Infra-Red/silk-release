@@ -444,3 +444,11 @@ func (p *VxlanPolicyPlanner) planIPTableRules(containerPolicySet containerPolicy
 
 	return ruleset
 }
+
+func containerPurposeMatchesAppLifecycle(containerPurpose, appLifecycle string) bool {
+	return appLifecycle == "all" ||
+		containerPurpose == "" ||
+		(appLifecycle == "running" && (containerPurpose == "task" || containerPurpose == "app")) ||
+		appLifecycle == "staging" && containerPurpose == "staging"
+
+}
